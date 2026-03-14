@@ -2,12 +2,13 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WATCHER_SCRIPT="${SCRIPT_DIR}/codexclaw-continue.sh"
+WATCHER_SCRIPT="${SCRIPT_DIR}/codex-homebase-continue.sh"
+CRON_COMMAND="bash ${WATCHER_SCRIPT}"
 CRON_SCHEDULE="${CRON_SCHEDULE:-0 */3 * * *}"
 TMP_CRON="$(mktemp)"
 
-if [[ ! -x "${WATCHER_SCRIPT}" ]]; then
-  echo "Watcher script is missing or not executable: ${WATCHER_SCRIPT}" >&2
+if [[ ! -f "${WATCHER_SCRIPT}" ]]; then
+  echo "Watcher script is missing: ${WATCHER_SCRIPT}" >&2
   exit 1
 fi
 
@@ -29,10 +30,10 @@ mv "${TMP_CRON}.next" "${TMP_CRON}"
 grep -Ev '^(SHELL|PATH|HOME)=' "${TMP_CRON}" > "${TMP_CRON}.body" || true
 
 cat "${TMP_CRON}.env" "${TMP_CRON}.body" > "${TMP_CRON}.merged"
-printf '%s %s\n' "${CRON_SCHEDULE}" "${WATCHER_SCRIPT}" >> "${TMP_CRON}.merged"
+printf '%s %s\n' "${CRON_SCHEDULE}" "${CRON_COMMAND}" >> "${TMP_CRON}.merged"
 
 crontab "${TMP_CRON}.merged"
 echo "Installed cron entry:"
-printf '%s %s\n' "${CRON_SCHEDULE}" "${WATCHER_SCRIPT}"
+printf '%s %s\n' "${CRON_SCHEDULE}" "${CRON_COMMAND}"
 
 rm -f "${TMP_CRON}" "${TMP_CRON}.env" "${TMP_CRON}.body" "${TMP_CRON}.merged"
