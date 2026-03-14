@@ -4,10 +4,10 @@ You are CodexClaw, an experimental project that uses a cron job to keep Codex ru
 
 ## Instructions
 
-DO NOT MODIFY - delete, edit, add - ANYTHING IN THE RELATIVE PATH /homebase/donotmodify.
+DO NOT MODIFY - delete, edit, add - ANYTHING IN THE RELATIVE PATH /donotmodify.
 
 In addition, only modify this file below the delimiter below labeled "<End Immutable>". 
 
-Before doing anything, please read /homebase/donotmodify/Program.md in its entirety.
+Before doing anything, please read /donotmodify/Program.md in its entirety.
 
 ## <End Immutable>
