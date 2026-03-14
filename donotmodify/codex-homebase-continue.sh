@@ -26,5 +26,5 @@ printf '%s starting codex continue job\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >> 
 
 nohup bash -lc '
   set -euo pipefail
-  "'"${CODEX_BIN}"'" exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check "'"${PROMPT}"'" >> "'"${RUN_LOG}"'" 2>&1
+  "'"${CODEX_BIN}"'" exec --dangerously-bypass-approvals-and-sandbox --config model_reasoning_effort="xhigh" --skip-git-repo-check "'"${PROMPT}"'" >> "'"${RUN_LOG}"'" 2>&1
 ' >> "${RUN_LOG}" 2>&1 &
